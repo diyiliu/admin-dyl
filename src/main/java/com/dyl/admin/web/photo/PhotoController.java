@@ -100,11 +100,11 @@ public class PhotoController {
 
         MemPhoto photo = memPhotoJpa.findById(id).get();
         // 删除大图+小图
-        org.springframework.core.io.Resource res = new UrlResource("file:" + fullDir + photo.getFull());
+        org.springframework.core.io.Resource res = new UrlResource(fullDir + photo.getFull());
         if (res.exists()) {
             res.getFile().delete();
         }
-        res = new UrlResource("file:" + thumbDir + photo.getThumb());
+        res = new UrlResource(thumbDir + photo.getThumb());
         if (res.exists()) {
             res.getFile().delete();
         }

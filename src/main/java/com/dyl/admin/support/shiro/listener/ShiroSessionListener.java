@@ -61,7 +61,7 @@ public class ShiroSessionListener implements SessionListener {
             for (MemPhoto photo : photos) {
                 String fullDir = environment.getProperty("upload.photo");
                 String path = fullDir + photo.getFull();
-                org.springframework.core.io.Resource res = new UrlResource("file:" + path);
+                org.springframework.core.io.Resource res = new UrlResource(path);
                 if (res.exists()) {
                     res.getFile().delete();
                     log.info("删除临时文件: [{}]", path);
