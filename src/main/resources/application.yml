@@ -1,0 +1,76 @@
+# https://docs.spring.io/spring-boot/docs/2.0.4.RELEASE/reference/htmlsingle/#common-application-properties
+server:
+  tomcat:
+    basedir: ${user.dir}/temp
+
+# SPRING
+spring:
+  profiles:
+    active: dev
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 500MB
+
+  mvc:
+    static-path-pattern: '/assets/**'
+  resources:
+    static-locations: 'classpath:/assets/'
+
+  # ehcache
+  cache:
+    ehcache:
+      config: 'classpath:/config/ehcache.xml'
+
+  #json
+  jackson:
+    locale: zh_CN
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+# LOGGING
+logging:
+  config: 'classpath:logback.xml'
+
+# 文件路径
+upload:
+  temp: file:./upload/temp/
+  user: file:./upload/user/
+
+  # 运维监控
+  deploy-dir: /opt/java/job/
+  monitor:
+   source: file:./upload/monitor/
+   target: /opt/java/
+
+  # 图片导航
+  photo: file:./upload/photo/
+  guide:
+    icon: file:./upload/guide/icon/
+    unknown: file:./upload/guide/
+
+# shiro
+shiro:
+  login-url: '/login'
+  success-url: '/home'
+  hash-algorithm: MD5
+  hash-iterations: 2
+  username-param: username
+  password-param: password
+  remember-me-param: rememberMe
+  filter-chain:
+    authc: /login,/authenticated
+    anon: /,/logout,/unauthorized,/webjars/**,/assets/**,/image/**,/actuator/**,/guest/**
+    user: /**
+
+# 监控
+monitor:
+  port: 9909
+
+# 监控信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics
