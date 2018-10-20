@@ -127,7 +127,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/home")
+    @GetMapping("/console")
     public String index(HttpSession session) {
         SysAsset asset = sysAssetJpa.findByCode("index");
         session.setAttribute("active", asset);
@@ -135,11 +135,11 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/home/{menu}")
+    @GetMapping("/console/{menu}")
     public String show(@PathVariable("menu") String menu, HttpServletRequest request,
                        @ModelAttribute("type") String type, @ModelAttribute("page") String page) {
 
-        SysAsset asset = sysAssetJpa.findByController("home/" + menu);
+        SysAsset asset = sysAssetJpa.findByController("console/" + menu);
         if (asset == null) {
             return "error/404";
         }
@@ -257,14 +257,14 @@ public class HomeController {
     }
 
 
-    @PostMapping("/home/preview/{type}/{page}")
+    @PostMapping("/console/preview/{type}/{page}")
     public String preview(@PathVariable int type, @PathVariable int page,
                           RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addFlashAttribute("type", type);
         redirectAttributes.addFlashAttribute("page", page);
 
-        return "redirect:/home/preview";
+        return "redirect:/console/preview";
     }
 
 

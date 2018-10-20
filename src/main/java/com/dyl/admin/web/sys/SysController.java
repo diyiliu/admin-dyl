@@ -72,7 +72,7 @@ public class SysController {
         List treeList = new ArrayList();
         for (SysAsset asset : rootList) {
             loadAsset(asset, menuMap);
-            treeList.add(toTree("home", asset, list));
+            treeList.add(toTree("console", asset, list));
         }
 
         return treeList;

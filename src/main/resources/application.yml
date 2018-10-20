@@ -53,7 +53,7 @@ upload:
 # shiro
 shiro:
   login-url: '/login'
-  success-url: '/home'
+  success-url: '/console'
   hash-algorithm: MD5
   hash-iterations: 2
   username-param: username
@@ -62,7 +62,7 @@ shiro:
   filter-chain:
     authc: /login,/authenticated
     anon: /,/logout,/unauthorized,/webjars/**,/assets/**,/image/**,/actuator/**,/guest/**
-    user: /**
+    user: /console/**
 
 # 监控
 monitor:
