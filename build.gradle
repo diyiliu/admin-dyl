@@ -71,8 +71,6 @@ dependencies {
     compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
     // 系统监控
     compile group: 'com.github.oshi', name: 'oshi-core', version: '3.8.4'
-    compile group: 'io.netty', name: 'netty-all', version: '4.1.22.Final'
-
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

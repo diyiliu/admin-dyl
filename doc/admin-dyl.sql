@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 阿里云
-Source Server Version : 50173
-Source Host           : 106.15.89.145:3306
-Source Database       : admin-tz
+Source Server         : local
+Source Server Version : 50721
+Source Host           : localhost:3306
+Source Database       : admin-dyl
 
 Target Server Type    : MYSQL
-Target Server Version : 50173
+Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2018-10-18 15:50:03
+Date: 2018-10-20 16:19:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,7 +58,6 @@ CREATE TABLE `dev_manifest` (
 -- ----------------------------
 -- Records of dev_manifest
 -- ----------------------------
-INSERT INTO `dev_manifest` VALUES ('1', 'Linux', null, '23', null, null, '测试', '测试', '2018-10-15 15:55:27');
 
 -- ----------------------------
 -- Table structure for dev_node
@@ -83,6 +82,10 @@ CREATE TABLE `dev_node` (
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='集群节点';
 
 -- ----------------------------
+-- Records of dev_node
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for dev_node_status
 -- ----------------------------
 DROP TABLE IF EXISTS `dev_node_status`;
@@ -99,147 +102,8 @@ CREATE TABLE `dev_node_status` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='节点实时状态信息';
 
 -- ----------------------------
--- Table structure for rel_user_role
+-- Records of dev_node_status
 -- ----------------------------
-DROP TABLE IF EXISTS `rel_user_role`;
-CREATE TABLE `rel_user_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of rel_user_role
--- ----------------------------
-INSERT INTO `rel_user_role` VALUES ('35', '1', '1');
-INSERT INTO `rel_user_role` VALUES ('42', '27', '17');
-INSERT INTO `rel_user_role` VALUES ('39', '27', '16');
-INSERT INTO `rel_user_role` VALUES ('27', '25', '15');
-
--- ----------------------------
--- Table structure for sys_asset
--- ----------------------------
-DROP TABLE IF EXISTS `sys_asset`;
-CREATE TABLE `sys_asset` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL COMMENT '资源名称',
-  `code` varchar(50) DEFAULT NULL COMMENT '资源代码',
-  `pid` int(11) DEFAULT NULL COMMENT '父ID',
-  `pids` varchar(80) DEFAULT NULL COMMENT '父节组ID',
-  `type` varchar(50) DEFAULT NULL COMMENT '类型',
-  `controller` varchar(100) DEFAULT NULL COMMENT '控制器',
-  `view` varchar(100) DEFAULT NULL COMMENT '视图',
-  `icon_css` varchar(100) DEFAULT NULL COMMENT '图标css',
-  `is_menu` int(11) DEFAULT NULL COMMENT '是否菜单',
-  `sort` int(11) DEFAULT NULL COMMENT '排序',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='系统资源';
-
--- ----------------------------
--- Records of sys_asset
--- ----------------------------
-INSERT INTO `sys_asset` VALUES ('1', '首页', 'index', '0', '0', 'menu', '', '', 'mdi-home', '1', '1');
-INSERT INTO `sys_asset` VALUES ('34', '程序清单', 'manifest', '39', '0/39', 'menu', 'home/manifest', 'devops/manifest', '', '1', '30');
-INSERT INTO `sys_asset` VALUES ('5', '系统管理', 'sys', '0', '0', 'node', '', '', 'mdi-settings', '1', '100');
-INSERT INTO `sys_asset` VALUES ('6', '用户管理', 'user', '5', '0/5', 'menu', 'home/user', 'sys/user', null, '1', '5');
-INSERT INTO `sys_asset` VALUES ('7', '角色管理', 'role', '5', '0/5', 'menu', 'home/role', 'sys/role', null, '1', '10');
-INSERT INTO `sys_asset` VALUES ('8', '菜单管理', 'menu', '5', '0/5', 'menu', 'home/menu', 'sys/menu', null, '1', '15');
-INSERT INTO `sys_asset` VALUES ('39', '运维管理', 'devops', '0', '0', 'node', '', '', 'mdi-lan-connect', '1', '30');
-INSERT INTO `sys_asset` VALUES ('43', '集群管理', 'cluster', '0', '0', 'node', '', '', 'mdi-sitemap', '1', '50');
-INSERT INTO `sys_asset` VALUES ('44', '节点管理', 'node', '43', '0/43', 'menu', 'home/node', 'devops/node', '', '1', '10');
-INSERT INTO `sys_asset` VALUES ('45', '节点状态', 'monitor', '43', '0/43', 'menu', 'home/monitor', 'devops/monitor', '', '1', '20');
-INSERT INTO `sys_asset` VALUES ('46', '接入管理', 'deploy', '0', '0', 'node', '', '', 'mdi-power-plug', '1', '20');
-INSERT INTO `sys_asset` VALUES ('47', '常规任务', 'normal', '46', '0/46', 'menu', 'home/deploy.1', 'deploy/normal', '', '1', '5');
-INSERT INTO `sys_asset` VALUES ('36', '相册管理', 'photo', '0', '0', 'node', '', '', 'mdi-panorama', '1', '40');
-INSERT INTO `sys_asset` VALUES ('37', '图片上传', 'upload', '36', '0/36', 'menu', 'home/upload', 'photo/upload', '', '1', '5');
-INSERT INTO `sys_asset` VALUES ('38', '图库预览', 'preview', '36', '0/36', 'menu', 'home/preview', 'photo/preview', '', '1', '10');
-INSERT INTO `sys_asset` VALUES ('40', '导航管理', 'guide', '0', '0', 'node', '', '', 'mdi-internet-explorer', '1', '80');
-INSERT INTO `sys_asset` VALUES ('41', '网址排序', 'sort', '40', '0/40', 'menu', 'home/guide.2', 'guide/sort', '', '1', '30');
-INSERT INTO `sys_asset` VALUES ('42', '网址导航', 'site', '40', '0/40', 'menu', 'home/guide.1', 'guide/site', '', '1', '5');
-
--- ----------------------------
--- Table structure for sys_privilege
--- ----------------------------
-DROP TABLE IF EXISTS `sys_privilege`;
-CREATE TABLE `sys_privilege` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `master` varchar(50) DEFAULT NULL,
-  `master_value` varchar(100) DEFAULT NULL,
-  `access` varchar(50) DEFAULT NULL,
-  `access_value` varchar(200) DEFAULT NULL,
-  `permission` varchar(50) DEFAULT NULL,
-  `comment` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=318 DEFAULT CHARSET=utf8 COMMENT='权限';
-
--- ----------------------------
--- Records of sys_privilege
--- ----------------------------
-INSERT INTO `sys_privilege` VALUES ('252', 'role', '17', 'menu', '33', 'home:deploy', null);
-INSERT INTO `sys_privilege` VALUES ('317', 'role', '1', 'menu', '47', 'plug:normal', null);
-INSERT INTO `sys_privilege` VALUES ('253', 'role', '17', 'menu', '34', 'home:manifest', null);
-INSERT INTO `sys_privilege` VALUES ('314', 'role', '1', 'menu', '33', 'devops:deploy', null);
-INSERT INTO `sys_privilege` VALUES ('316', 'role', '1', 'menu', '45', 'cluster:monitor', null);
-INSERT INTO `sys_privilege` VALUES ('315', 'role', '1', 'menu', '44', 'cluster:node', null);
-INSERT INTO `sys_privilege` VALUES ('313', 'role', '1', 'menu', '8', 'sys:menu', null);
-INSERT INTO `sys_privilege` VALUES ('312', 'role', '1', 'menu', '7', 'sys:role', null);
-INSERT INTO `sys_privilege` VALUES ('311', 'role', '1', 'menu', '6', 'sys:user', null);
-INSERT INTO `sys_privilege` VALUES ('251', 'role', '17', 'menu', '1', 'home:index', null);
-INSERT INTO `sys_privilege` VALUES ('310', 'role', '1', 'menu', '1', 'home:index', null);
-
--- ----------------------------
--- Table structure for sys_role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) DEFAULT NULL COMMENT '父ID',
-  `name` varchar(50) DEFAULT NULL COMMENT '角色名称',
-  `code` varchar(30) DEFAULT NULL COMMENT '角色代码',
-  `comment` varchar(100) DEFAULT NULL COMMENT '角色描述',
-  `create_user` varchar(50) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_role
--- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', null, '管理员角色', 'admin', '管理员角色', 'admin', '2018-09-16 00:24:55');
-INSERT INTO `sys_role` VALUES ('17', null, '测试角色', 'test', '测试角色', 'admin', '2018-09-16 13:39:58');
-
--- ----------------------------
--- Table structure for sys_user
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
-  `password` varchar(80) DEFAULT NULL COMMENT '登录密码',
-  `salt` varchar(50) DEFAULT NULL COMMENT '盐',
-  `name` varchar(20) DEFAULT NULL COMMENT '真实姓名',
-  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `tel` varchar(15) DEFAULT NULL COMMENT '联系电话',
-  `org_id` int(11) DEFAULT NULL COMMENT '用户所属机构',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `create_user` varchar(50) DEFAULT NULL COMMENT '创建人',
-  `status` int(11) DEFAULT NULL COMMENT '用户状态',
-  `user_icon` varchar(100) DEFAULT NULL,
-  `note` varchar(255) DEFAULT NULL,
-  `expire_time` datetime DEFAULT NULL COMMENT '过期时间',
-  `login_count` int(11) DEFAULT NULL COMMENT '登陆次数',
-  `last_login_ip` varchar(20) DEFAULT NULL COMMENT '最后登陆IP',
-  `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'b722097ee08ea4c20eae7958639c839e', 'b9f1d5d2b65231cd016e6d84979f7078', '管理员', '87166669@dyl.com', '18086776731', null, null, null, null, 'icon1006822817203197796.jpg', '积极进取，持之以恒。', '2020-05-20 00:00:00', '1152', '218.3.247.226', '2018-10-18 15:37:49');
-INSERT INTO `sys_user` VALUES ('27', 'test', '8d1e533914f577ec50f478973fcd7245', 'dd06bb22476ddb60057daf36ba5ffe58', '测试', '88776699@qq.com', '88776699', null, '2018-09-13 14:11:29', 'admin', '1', 'icon8735320946401041351.jpg', null, '2019-09-12 14:11:19', '3', '0:0:0:0:0:0:0:1', '2018-10-18 13:30:10');
-
 
 -- ----------------------------
 -- Table structure for guide_site
@@ -336,19 +200,13 @@ CREATE TABLE `mem_body` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(50) DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COMMENT='概要';
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COMMENT='概要';
 
 -- ----------------------------
 -- Records of mem_body
 -- ----------------------------
-INSERT INTO `mem_body` VALUES ('73', '3', '2018-09-28', '', '', '118,119,120', '2018-09-28 21:51:03', 'admin');
-INSERT INTO `mem_body` VALUES ('74', '3', '2018-09-28', '', '', '121,122,123,124,125', '2018-09-28 21:51:50', 'admin');
-INSERT INTO `mem_body` VALUES ('75', '3', '2018-09-28', '', '', '126,127', '2018-09-28 22:00:01', 'admin');
-INSERT INTO `mem_body` VALUES ('76', '3', '2018-10-01', '', '', '128,129', '2018-10-01 11:31:52', 'admin');
-INSERT INTO `mem_body` VALUES ('77', '3', '2018-10-02', '龟蒙山', '', '130,131,132,133,134,135,136,137', '2018-10-02 22:06:45', 'admin');
-INSERT INTO `mem_body` VALUES ('78', '3', '2018-10-03', '天蒙山', '', '138,139,141,142,143,144', '2018-10-03 21:56:50', 'admin');
-INSERT INTO `mem_body` VALUES ('79', '3', '2018-10-03', '累很快乐', '', '146,147,148,149,150,151,152,153,154', '2018-10-04 05:50:57', 'admin');
-INSERT INTO `mem_body` VALUES ('80', '1', '2018-10-19', '沂蒙山', '', '155', '2018-10-19 16:44:02', 'admin');
+INSERT INTO `mem_body` VALUES ('91', '1', '2018-10-20', '睡着了', '', null, '2018-10-20 11:47:35', 'admin');
+INSERT INTO `mem_body` VALUES ('92', '1', '2018-10-20', '', '', null, '2018-10-20 11:58:33', 'admin');
 
 -- ----------------------------
 -- Table structure for mem_photo
@@ -361,47 +219,11 @@ CREATE TABLE `mem_photo` (
   `full` varchar(100) DEFAULT NULL COMMENT '路径',
   `thumb` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8 COMMENT='照片';
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COMMENT='照片';
 
 -- ----------------------------
 -- Records of mem_photo
 -- ----------------------------
-INSERT INTO `mem_photo` VALUES ('118', '右右宝宝出生了', '2015.12.8 儿子出生', 'full7616561789129673706.jpg', 'small918325304697723131.jpg');
-INSERT INTO `mem_photo` VALUES ('119', '睡得香', '老婆辛苦了，大胖儿子', 'full761737167898513491.jpg', 'small1107610126329619056.jpg');
-INSERT INTO `mem_photo` VALUES ('120', '我去上学校', '2018.6 王炳哲上学了', 'full127511643122488625.jpg', 'small7918162258015430186.jpg');
-INSERT INTO `mem_photo` VALUES ('121', '加油向前冲', '幼儿园', 'full1486404780485096303.jpg', 'small8834078596097603260.jpg');
-INSERT INTO `mem_photo` VALUES ('122', '2017春节 小南海', '过年啦', 'full6842519110502894442.jpg', 'small625459730316452347.jpg');
-INSERT INTO `mem_photo` VALUES ('123', '滑滑梯', '幼儿园滑滑梯', 'full7297453415738894372.jpg', 'small743215625509517521.jpg');
-INSERT INTO `mem_photo` VALUES ('124', '最爱的踏板车', '王炳哲最喜欢骑三轮车', 'full1662692172694827631.jpg', 'small407440773672071883.jpg');
-INSERT INTO `mem_photo` VALUES ('125', '我要上来了', '', 'full7872377113861051787.jpg', 'small6037758573059619915.jpg');
-INSERT INTO `mem_photo` VALUES ('126', '小小工程师', '', 'full3082626625679864724.jpg', 'small7100531623394622475.jpg');
-INSERT INTO `mem_photo` VALUES ('127', '宿州野生动物园', '', 'full5056379025789833222.jpg', 'small1374857043256276880.jpg');
-INSERT INTO `mem_photo` VALUES ('128', null, null, 'full4717629418122549363.jpg', 'small9028897185919707482.jpg');
-INSERT INTO `mem_photo` VALUES ('129', null, null, 'full2035254593335293376.jpg', 'small8305260793661326944.jpg');
-INSERT INTO `mem_photo` VALUES ('130', null, null, 'full5889127323513880839.jpg', 'small78592670127046020.jpg');
-INSERT INTO `mem_photo` VALUES ('131', null, null, 'full3080603961132942552.jpg', 'small7376887073804607194.jpg');
-INSERT INTO `mem_photo` VALUES ('132', null, null, 'full8017589583115017977.jpg', 'small3249719581583514399.jpg');
-INSERT INTO `mem_photo` VALUES ('133', null, null, 'full8134165892553899507.jpg', 'small8523046836508336495.jpg');
-INSERT INTO `mem_photo` VALUES ('134', null, null, 'full1891231602618883056.jpg', 'small8243086972136705999.jpg');
-INSERT INTO `mem_photo` VALUES ('135', null, null, 'full4930063360279796805.jpg', 'small8998177639909777752.jpg');
-INSERT INTO `mem_photo` VALUES ('136', null, null, 'full8848182774124955701.jpg', 'small5385315547745397519.jpg');
-INSERT INTO `mem_photo` VALUES ('137', null, null, 'full656328125600935555.jpg', 'small4170615239905588145.jpg');
-INSERT INTO `mem_photo` VALUES ('138', null, null, 'full8593415106861736286.jpg', 'small4609715778801919493.jpg');
-INSERT INTO `mem_photo` VALUES ('139', null, null, 'full5831372035216380025.jpg', 'small7561488108834004256.jpg');
-INSERT INTO `mem_photo` VALUES ('141', null, null, 'full8054926910628662539.jpg', 'small7828530702439556163.jpg');
-INSERT INTO `mem_photo` VALUES ('142', null, null, 'full5994457333577627669.jpg', 'small7378072916254548468.jpg');
-INSERT INTO `mem_photo` VALUES ('143', null, null, 'full1163866287584351495.jpg', 'small3055243380687871047.jpg');
-INSERT INTO `mem_photo` VALUES ('144', null, null, 'full8243584827172537592.jpg', 'small7814023600231602082.jpg');
-INSERT INTO `mem_photo` VALUES ('146', null, null, 'full752814418185355445.jpg', 'small2123856896119461659.jpg');
-INSERT INTO `mem_photo` VALUES ('147', null, null, 'full558082530958529776.jpg', 'small1346433977368088726.jpg');
-INSERT INTO `mem_photo` VALUES ('148', null, null, 'full5843238929153493415.jpg', 'small5778346276505274323.jpg');
-INSERT INTO `mem_photo` VALUES ('149', null, null, 'full989851255083898768.jpg', 'small1575614633929092584.jpg');
-INSERT INTO `mem_photo` VALUES ('150', null, null, 'full1694315373334434977.jpg', 'small1863674481975041765.jpg');
-INSERT INTO `mem_photo` VALUES ('151', null, null, 'full1888059219140194040.jpg', 'small7192858548612746890.jpg');
-INSERT INTO `mem_photo` VALUES ('152', null, null, 'full3529194953579094067.jpg', 'small2051917464028293886.jpg');
-INSERT INTO `mem_photo` VALUES ('153', null, null, 'full1590071746686330610.jpg', 'small4112768547510616743.jpg');
-INSERT INTO `mem_photo` VALUES ('154', null, null, 'full4469155492126933375.jpg', 'small2742631118326573053.jpg');
-INSERT INTO `mem_photo` VALUES ('155', null, null, 'full7050862528792335661.jpg', 'small7856845358976568451.jpg');
 
 -- ----------------------------
 -- Table structure for mem_type
@@ -421,3 +243,149 @@ CREATE TABLE `mem_type` (
 INSERT INTO `mem_type` VALUES ('1', '亲子', '', '1');
 INSERT INTO `mem_type` VALUES ('2', '旅行', '', '2');
 INSERT INTO `mem_type` VALUES ('3', '公开', '', '3');
+
+-- ----------------------------
+-- Table structure for rel_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `rel_user_role`;
+CREATE TABLE `rel_user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rel_user_role
+-- ----------------------------
+INSERT INTO `rel_user_role` VALUES ('35', '1', '1');
+INSERT INTO `rel_user_role` VALUES ('42', '27', '17');
+INSERT INTO `rel_user_role` VALUES ('39', '27', '16');
+INSERT INTO `rel_user_role` VALUES ('27', '25', '15');
+
+-- ----------------------------
+-- Table structure for sys_asset
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_asset`;
+CREATE TABLE `sys_asset` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL COMMENT '资源名称',
+  `code` varchar(50) DEFAULT NULL COMMENT '资源代码',
+  `pid` int(11) DEFAULT NULL COMMENT '父ID',
+  `pids` varchar(80) DEFAULT NULL COMMENT '父节组ID',
+  `type` varchar(50) DEFAULT NULL COMMENT '类型',
+  `controller` varchar(100) DEFAULT NULL COMMENT '控制器',
+  `view` varchar(100) DEFAULT NULL COMMENT '视图',
+  `icon_css` varchar(100) DEFAULT NULL COMMENT '图标css',
+  `is_menu` int(11) DEFAULT NULL COMMENT '是否菜单',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='系统资源';
+
+-- ----------------------------
+-- Records of sys_asset
+-- ----------------------------
+INSERT INTO `sys_asset` VALUES ('1', '首页', 'index', '0', '0', 'menu', '', '', 'mdi-home', '1', '1');
+INSERT INTO `sys_asset` VALUES ('34', '程序清单', 'manifest', '39', '0/39', 'menu', 'console/manifest', 'devops/manifest', '', '1', '30');
+INSERT INTO `sys_asset` VALUES ('5', '系统管理', 'sys', '0', '0', 'node', '', '', 'mdi-settings', '1', '100');
+INSERT INTO `sys_asset` VALUES ('6', '用户管理', 'user', '5', '0/5', 'menu', 'console/user', 'sys/user', null, '1', '5');
+INSERT INTO `sys_asset` VALUES ('7', '角色管理', 'role', '5', '0/5', 'menu', 'console/role', 'sys/role', null, '1', '10');
+INSERT INTO `sys_asset` VALUES ('8', '菜单管理', 'menu', '5', '0/5', 'menu', 'console/menu', 'sys/menu', null, '1', '15');
+INSERT INTO `sys_asset` VALUES ('39', '运维管理', 'devops', '0', '0', 'node', '', '', 'mdi-lan-connect', '1', '50');
+INSERT INTO `sys_asset` VALUES ('43', '集群管理', 'cluster', '0', '0', 'node', '', '', 'mdi-sitemap', '1', '30');
+INSERT INTO `sys_asset` VALUES ('44', '节点管理', 'node', '43', '0/43', 'menu', 'console/node', 'devops/node', '', '1', '10');
+INSERT INTO `sys_asset` VALUES ('45', '节点状态', 'monitor', '43', '0/43', 'menu', 'console/monitor', 'devops/monitor', '', '1', '20');
+INSERT INTO `sys_asset` VALUES ('46', '接入管理', 'deploy', '0', '0', 'node', '', '', 'mdi-power-plug', '1', '20');
+INSERT INTO `sys_asset` VALUES ('47', '常规任务', 'normal', '46', '0/46', 'menu', 'console/deploy.1', 'deploy/normal', '', '1', '5');
+INSERT INTO `sys_asset` VALUES ('36', '相册管理', 'photo', '0', '0', 'node', '', '', 'mdi-image-album', '1', '80');
+INSERT INTO `sys_asset` VALUES ('37', '图片上传', 'upload', '36', '0/36', 'menu', 'console/upload', 'photo/upload', '', '1', '5');
+INSERT INTO `sys_asset` VALUES ('38', '图库预览', 'preview', '36', '0/36', 'menu', 'console/preview', 'photo/preview', '', '1', '10');
+INSERT INTO `sys_asset` VALUES ('40', '导航管理', 'guide', '0', '0', 'node', '', '', 'mdi-navigation', '1', '70');
+INSERT INTO `sys_asset` VALUES ('41', '网址排序', 'sort', '40', '0/40', 'menu', 'console/guide.2', 'guide/sort', '', '1', '30');
+INSERT INTO `sys_asset` VALUES ('42', '网址导航', 'site', '40', '0/40', 'menu', 'console/guide.1', 'guide/site', '', '1', '5');
+
+-- ----------------------------
+-- Table structure for sys_privilege
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_privilege`;
+CREATE TABLE `sys_privilege` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `master` varchar(50) DEFAULT NULL,
+  `master_value` varchar(100) DEFAULT NULL,
+  `access` varchar(50) DEFAULT NULL,
+  `access_value` varchar(200) DEFAULT NULL,
+  `permission` varchar(50) DEFAULT NULL,
+  `comment` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=340 DEFAULT CHARSET=utf8 COMMENT='权限';
+
+-- ----------------------------
+-- Records of sys_privilege
+-- ----------------------------
+INSERT INTO `sys_privilege` VALUES ('252', 'role', '17', 'menu', '33', 'home:deploy', null);
+INSERT INTO `sys_privilege` VALUES ('335', 'role', '1', 'menu', '41', 'guide:sort', null);
+INSERT INTO `sys_privilege` VALUES ('253', 'role', '17', 'menu', '34', 'home:manifest', null);
+INSERT INTO `sys_privilege` VALUES ('336', 'role', '1', 'menu', '42', 'guide:site', null);
+INSERT INTO `sys_privilege` VALUES ('334', 'role', '1', 'menu', '34', 'devops:manifest', null);
+INSERT INTO `sys_privilege` VALUES ('333', 'role', '1', 'menu', '38', 'photo:preview', null);
+INSERT INTO `sys_privilege` VALUES ('332', 'role', '1', 'menu', '37', 'photo:upload', null);
+INSERT INTO `sys_privilege` VALUES ('251', 'role', '17', 'menu', '1', 'home:index', null);
+INSERT INTO `sys_privilege` VALUES ('331', 'role', '1', 'menu', '8', 'sys:menu', null);
+INSERT INTO `sys_privilege` VALUES ('330', 'role', '1', 'menu', '7', 'sys:role', null);
+INSERT INTO `sys_privilege` VALUES ('329', 'role', '1', 'menu', '6', 'sys:user', null);
+INSERT INTO `sys_privilege` VALUES ('328', 'role', '1', 'menu', '1', 'home:index', null);
+INSERT INTO `sys_privilege` VALUES ('337', 'role', '1', 'menu', '44', 'cluster:node', null);
+INSERT INTO `sys_privilege` VALUES ('338', 'role', '1', 'menu', '45', 'cluster:monitor', null);
+INSERT INTO `sys_privilege` VALUES ('339', 'role', '1', 'menu', '47', 'deploy:normal', null);
+
+-- ----------------------------
+-- Table structure for sys_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) DEFAULT NULL COMMENT '父ID',
+  `name` varchar(50) DEFAULT NULL COMMENT '角色名称',
+  `code` varchar(30) DEFAULT NULL COMMENT '角色代码',
+  `comment` varchar(100) DEFAULT NULL COMMENT '角色描述',
+  `create_user` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+INSERT INTO `sys_role` VALUES ('1', null, '管理员角色', 'admin', '管理员角色', 'admin', '2018-09-16 00:24:55');
+INSERT INTO `sys_role` VALUES ('17', null, '测试角色', 'test', '测试角色', 'admin', '2018-09-16 13:39:58');
+
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(80) DEFAULT NULL COMMENT '登录密码',
+  `salt` varchar(50) DEFAULT NULL COMMENT '盐',
+  `name` varchar(20) DEFAULT NULL COMMENT '真实姓名',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `tel` varchar(15) DEFAULT NULL COMMENT '联系电话',
+  `org_id` int(11) DEFAULT NULL COMMENT '用户所属机构',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `status` int(11) DEFAULT NULL COMMENT '用户状态',
+  `user_icon` varchar(100) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `expire_time` datetime DEFAULT NULL COMMENT '过期时间',
+  `login_count` int(11) DEFAULT NULL COMMENT '登陆次数',
+  `last_login_ip` varchar(20) DEFAULT NULL COMMENT '最后登陆IP',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'b722097ee08ea4c20eae7958639c839e', 'b9f1d5d2b65231cd016e6d84979f7078', '管理员', '87166669@dyl.com', '18086776731', null, null, null, null, 'icon2968025534378140610.jpg', '积极进取，持之以恒。', '2020-05-20 00:00:00', '1176', '0:0:0:0:0:0:0:1', '2018-10-20 12:15:01');
+INSERT INTO `sys_user` VALUES ('27', 'test', '8d1e533914f577ec50f478973fcd7245', 'dd06bb22476ddb60057daf36ba5ffe58', '测试', '88776699@qq.com', '88776699', null, '2018-09-13 14:11:29', 'admin', '1', 'icon8735320946401041351.jpg', null, '2019-09-12 14:11:19', '3', '0:0:0:0:0:0:0:1', '2018-10-18 13:30:10');
