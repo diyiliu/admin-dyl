@@ -76,7 +76,6 @@ public class ImageUtil {
         }
 
         Thumbnails.of(imagePath).size(width, height).keepAspectRatio(false).toFile(outPath);
-
     }
 
     /**
