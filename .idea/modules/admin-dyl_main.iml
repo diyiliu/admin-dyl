@@ -52,6 +52,7 @@
     <orderEntry type="library" name="Gradle: org.webjars.npm:fastclick:1.0.6" level="project" />
     <orderEntry type="library" name="Gradle: org.webjars.npm:bootstrap:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.webjars.npm:font-awesome:4.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.webjars.npm:summernote:0.8.10" level="project" />
     <orderEntry type="library" name="Gradle: com.alibaba:druid:1.1.2" level="project" />
     <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:5.1.36" level="project" />
     <orderEntry type="library" name="Gradle: net.sf.ehcache:ehcache:2.10.5" level="project" />

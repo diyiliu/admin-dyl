@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>帝一流</title>
+
+    <link th:href="@{/webjars/summernote/0.8.10/dist/summernote.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/libs/summernote-bootstrap4/summernote.css}"  rel="stylesheet">
+</head>
+
+<body>
+<div layout:fragment="breadcrumb" class="page-breadcrumb">
+    <div class="row">
+        <div class="col-5 align-self-center">
+            <h4 class="page-title">编辑内容</h4>
+        </div>
+        <div class="col-7 align-self-center">
+            <div class="d-flex align-items-center justify-content-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Blog</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Editor</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="container" class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="title" class="control-label">标题</label>
+                        <input type="text" placeholder="标题" class="form-control" id="title">
+                    </div>
+                    <div id="summernote"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-body" style="padding-bottom: 0">
+                    <form class="form-horizontal form-material" id="profileFm">
+                        <div class="form-group">
+                            <label for="sysType" class="control-label">博客类型</label>
+                            <select id="sysType" class="form-control">
+                                <option value="">请选择</option>
+                                <option value="">物联网</option>
+                                <option value="">游戏开发</option>
+                                <option value="">后端开发</option>
+                                <option value="">前端开发</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="arType" class="control-label">文章类型</label>
+                            <select id="arType" class="form-control">
+                                <option value="">请选择</option>
+                                <option value="">原创</option>
+                                <option value="">转载</option>
+                                <option value="">其他</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title" class="control-label">标签</label>
+                            <input type="text" placeholder="标签" class="form-control" id="tag">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="pub" class="control-label">仅自己可见</label>
+                            <div class="form-control" style="border: 0">
+                                <label class="switch switch-default switch-success-outline-alt mr-2">
+                                    <input id="pub" type="checkbox" class="switch-input">
+                                    <span class="switch-label"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="border-top">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger">发布文章</button>
+                        <button type="button" class="btn btn-primary" >保存草稿</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="allJs">
+    <script th:src="@{/assets/libs/summernote-bootstrap4/summernote.js}"></script>
+    <script th:src="@{/webjars/summernote/0.8.10/lang/summernote-zh-CN.js}"></script>
+
+    <script th:inline="javascript">
+        $(function () {
+            $('#summernote').summernote({
+                lang: 'zh-CN',
+                height: 540,
+                callbacks: {
+                    onImageUpload: function (files) {
+
+                    }
+                }
+            });
+
+            $('#tag').tagsInput({defaultText: '', width: 'auto', height: 35});
+        });
+    </script>
+</div>
+</body>
+</html>
