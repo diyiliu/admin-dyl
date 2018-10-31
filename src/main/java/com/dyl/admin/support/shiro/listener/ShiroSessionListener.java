@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class ShiroSessionListener implements SessionListener {
+public class  ShiroSessionListener implements SessionListener {
 
     @Resource
     private Environment environment;
@@ -55,7 +55,7 @@ public class ShiroSessionListener implements SessionListener {
     }
 
     private void clearTemp(Session session) throws Exception {
-        List<MemPhoto> photos = (List<MemPhoto>) session.getAttribute("temp");
+        List<MemPhoto> photos = (List<MemPhoto>) session.getAttribute("temp_photo");
 
         if (CollectionUtils.isNotEmpty(photos)) {
             for (MemPhoto photo : photos) {

@@ -52,7 +52,7 @@ dependencies {
     compile group: 'org.webjars.npm', name: 'bootstrap', version: '4.1.0'
     compile group: 'org.webjars.npm', name: 'font-awesome', version: '4.3.0'
     compile group: 'org.webjars.npm', name: 'toastr', version: '2.1.4'
-    compile group: 'org.webjars.npm', name: 'summernote', version: '0.8.10'
+    compile group: 'org.webjars.npm', name: 'summernote', version: '0.8.9'
 
 
     // other
