@@ -35,11 +35,8 @@ public class SysUser {
 
     private String name;
 
-    @NotEmpty
     private String tel;
 
-    @Email
-    @NotEmpty
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)

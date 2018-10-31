@@ -185,10 +185,10 @@ public class PhotoController {
             ImageUtil.zipQuality(tempFile.getPath(), tempFile.getPath(), size.intValue(), max);
         }
 
-        List<MemPhoto> photos = (List<MemPhoto>) session.getAttribute("temp");
+        List<MemPhoto> photos = (List<MemPhoto>) session.getAttribute("temp_photo");
         if (photos == null) {
             photos = new ArrayList();
-            session.setAttribute("temp", photos);
+            session.setAttribute("temp_photo", photos);
         }
         MemPhoto photo = new MemPhoto();
         photo.setOriginalName(fileName);

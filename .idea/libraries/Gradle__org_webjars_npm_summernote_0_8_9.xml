@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.webjars.npm:summernote:0.8.9">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/.gradle/caches/modules-2/files-2.1/org.webjars.npm/summernote/0.8.9/2ce9a505a7cdd5c9cb41bd732db361ffc18a0675/summernote-0.8.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/.gradle/caches/modules-2/files-2.1/org.webjars.npm/summernote/0.8.9/b04f3ee8f5e43fa3b162981b50bb72fe1acabb33/summernote-0.8.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

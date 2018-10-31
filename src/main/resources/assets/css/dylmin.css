@@ -656,3 +656,10 @@
     border-bottom: 5px solid #afb5c1;
     padding-bottom: 10px;
 }
+
+.border-top > .card-body > :not(:first-child) {
+    margin-left: .25rem;
+}
+.border-top > .card-body > :not(:last-child) {
+    margin-right: .25rem;
+}

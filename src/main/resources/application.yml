@@ -37,6 +37,7 @@ logging:
 upload:
   temp: file:./upload/temp/
   user: file:./upload/user/
+  pic: file:./upload/picture/
 
   # 运维监控
   deploy-dir: /opt/java/job/

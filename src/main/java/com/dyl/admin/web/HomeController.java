@@ -1,5 +1,6 @@
 package com.dyl.admin.web;
 
+import com.dyl.admin.support.model.RespBody;
 import com.dyl.admin.support.util.ImageUtil;
 import com.dyl.admin.support.util.JacksonUtil;
 import com.dyl.admin.web.guide.dto.SiteType;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -26,6 +28,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -42,10 +45,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -171,18 +171,18 @@ public class HomeController {
     }
 
     @GetMapping("/image/{dir}/{name:.+}")
-    public void uploadedImage(@PathVariable("name") String name, @PathVariable("dir") String dir,
-                              HttpServletResponse response) {
+    public void showImage(@PathVariable("name") String name, @PathVariable("dir") String dir,
+                          HttpServletResponse response) {
         String imagePath = "";
         if (dir.equalsIgnoreCase("user")) {
             imagePath = environment.getProperty("upload.user");
-        }else if (dir.equalsIgnoreCase("photo")) {
-            if (name.startsWith("full")){
+        } else if (dir.equalsIgnoreCase("photo")) {
+            if (name.startsWith("full")) {
                 imagePath = environment.getProperty("upload.photo");
-            }else {
+            } else {
                 imagePath = environment.getProperty("upload.photo") + "thumb" + File.separator;
             }
-        }else if (dir.equalsIgnoreCase("guide")){
+        } else if (dir.equalsIgnoreCase("guide")) {
             if ("unknown.png".equals(name)) {
                 imagePath = environment.getProperty("upload.guide.unknown");
             } else {
@@ -238,7 +238,7 @@ public class HomeController {
         }
 
         // 删除文件
-        if (StringUtils.isNotEmpty(oldIcon)){
+        if (StringUtils.isNotEmpty(oldIcon)) {
             org.springframework.core.io.Resource localRes = new UrlResource(picDir + oldIcon);
             if (localRes.exists()) {
                 if (!localRes.getFile().delete()) {
@@ -295,7 +295,7 @@ public class HomeController {
             if (strArray.length > 0) {
                 Long[] ids = (Long[]) ConvertUtils.convert(strArray, Long.class);
                 List list = memPhotoJpa.findByIdIn(ids);
-                if (CollectionUtils.isNotEmpty(list)){
+                if (CollectionUtils.isNotEmpty(list)) {
                     photoList.addAll(list);
                 }
             }
@@ -327,5 +327,47 @@ public class HomeController {
         ImageUtil.crop(imagePath, x, y, w, h, imagePath);
         // 缩放
         ImageUtil.scale(imagePath, 256, 256, imagePath);
+    }
+
+    @ResponseBody
+    @PostMapping("/image/upload")
+    public RespBody imgUpload(MultipartFile file, HttpSession session) throws Exception {
+        RespBody respBody = new RespBody();
+
+        String ym = String.format("%1$tY%1$tm", new Date());
+        String picDir = environment.getProperty("upload.pic") + ym + "/";
+        org.springframework.core.io.Resource resDir = new UrlResource(picDir);
+        if (!resDir.getFile().exists()) {
+            resDir.getFile().mkdir();
+        }
+
+        String fileName = file.getOriginalFilename();
+        // 创建临时文件
+        File tempFile = File.createTempFile("pic", fileName.substring(fileName.lastIndexOf(".")).toLowerCase(), resDir.getFile());
+        FileCopyUtils.copy(file.getBytes(), tempFile);
+
+        String picName = tempFile.getName();
+
+        List<String> pictures = (List<String>) session.getAttribute("temp_pic");
+        if (pictures == null) {
+            pictures = new ArrayList();
+            session.setAttribute("temp_pic", pictures);
+        }
+        pictures.add(picName);
+
+        String picPath = "/image/pic/" + ym + "/" + picName;
+        respBody.setStatus(1);
+        respBody.setMsg(picPath);
+
+        return respBody;
+    }
+
+    @ResponseBody
+    @GetMapping("/image/pic/{date}/{name:.+}")
+    public ResponseEntity showPicture(@PathVariable("name") String name, @PathVariable("date") String date) throws Exception {
+        String imagePath = environment.getProperty("upload.pic") + "/" + date + "/" + name;
+        org.springframework.core.io.Resource imgRes = new UrlResource(imagePath);
+
+        return ResponseEntity.ok(FileUtils.readFileToByteArray(imgRes.getFile()));
     }
 }
