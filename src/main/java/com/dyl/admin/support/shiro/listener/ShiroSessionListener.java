@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class  ShiroSessionListener implements SessionListener {
+public class ShiroSessionListener implements SessionListener {
 
     @Resource
     private Environment environment;
@@ -61,6 +61,19 @@ public class  ShiroSessionListener implements SessionListener {
             for (MemPhoto photo : photos) {
                 String fullDir = environment.getProperty("upload.photo");
                 String path = fullDir + photo.getFull();
+                org.springframework.core.io.Resource res = new UrlResource(path);
+                if (res.exists()) {
+                    res.getFile().delete();
+                    log.info("删除临时文件: [{}]", path);
+                }
+            }
+        }
+
+        List<String> pictures = (List<String>) session.getAttribute("temp_pic");
+        if (CollectionUtils.isNotEmpty(pictures)) {
+            for (String pic : pictures) {
+                String picDir = environment.getProperty("upload.pic");
+                String path = picDir + pic;
                 org.springframework.core.io.Resource res = new UrlResource(path);
                 if (res.exists()) {
                     res.getFile().delete();

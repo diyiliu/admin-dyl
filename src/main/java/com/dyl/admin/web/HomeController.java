@@ -334,8 +334,8 @@ public class HomeController {
     public RespBody imgUpload(MultipartFile file, HttpSession session) throws Exception {
         RespBody respBody = new RespBody();
 
-        String ym = String.format("%1$tY%1$tm", new Date());
-        String picDir = environment.getProperty("upload.pic") + ym + "/";
+        String date = String.format("%1$tY%1$tm", new Date());
+        String picDir = environment.getProperty("upload.pic") + date + "/";
         org.springframework.core.io.Resource resDir = new UrlResource(picDir);
         if (!resDir.getFile().exists()) {
             resDir.getFile().mkdir();
@@ -346,8 +346,7 @@ public class HomeController {
         File tempFile = File.createTempFile("pic", fileName.substring(fileName.lastIndexOf(".")).toLowerCase(), resDir.getFile());
         FileCopyUtils.copy(file.getBytes(), tempFile);
 
-        String picName = tempFile.getName();
-
+        String picName = date + "/" + tempFile.getName();
         List<String> pictures = (List<String>) session.getAttribute("temp_pic");
         if (pictures == null) {
             pictures = new ArrayList();
@@ -355,7 +354,7 @@ public class HomeController {
         }
         pictures.add(picName);
 
-        String picPath = "/image/pic/" + ym + "/" + picName;
+        String picPath = "/image/pic/" + picName;
         respBody.setStatus(1);
         respBody.setMsg(picPath);
 

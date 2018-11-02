@@ -55,7 +55,7 @@ public class PhotoController {
         String[] fileArray = files.split(",");
         List<String> names = Arrays.asList(fileArray);
 
-        List<MemPhoto> photos = (List<MemPhoto>) session.getAttribute("temp");
+        List<MemPhoto> photos = (List<MemPhoto>) session.getAttribute("temp_photo");
         try {
             String ids = doPhoto(names, photos);
             memBody.setPhotos(ids);
