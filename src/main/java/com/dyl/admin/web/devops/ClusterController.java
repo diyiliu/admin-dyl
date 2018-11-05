@@ -129,7 +129,8 @@ public class ClusterController {
         List<Deploy> deployList = deployJpa.findByNodeId(id);
         NodeStatus status = nodeStatusJpa.findByNodeId(id);
         // 有正在运行的程序, 无法删除
-        if (CollectionUtils.isNotEmpty(deployList) || status.getStatus() == 1) {
+        if (CollectionUtils.isNotEmpty(deployList) ||
+                (status.getStatus() != null && status.getStatus() == 1)) {
 
             return 0;
         }
